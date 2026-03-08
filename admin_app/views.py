@@ -25,6 +25,7 @@ def admin_login(request):
         name = request.POST.get("admin_name")
         mail = request.POST.get("admin_email")
         pswd = request.POST.get("password")
+        redirect(dashboard)
 
         user = authenticate(request, username=name, password=pswd)
 
