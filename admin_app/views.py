@@ -25,8 +25,6 @@ def admin_login(request):
         name = request.POST.get("admin_name")
         mail = request.POST.get("admin_email")
         pswd = request.POST.get("password")
-        redirect('dashboard')
-        redirect(worker_login_page)
 
         user = authenticate(request, username=name, password=pswd)
 
@@ -34,10 +32,10 @@ def admin_login(request):
             login(request, user)
             request.session['admin_name'] = name
             request.session['admin_email'] = mail
-            return redirect(dashboard)
+            return redirect('dashboard')
         else:
             messages.error(request, "Invalid username or password.")
-            return redirect(admin_login_page)
+            return redirect('admin_login_page')
 
 
 def admin_logout(request):
