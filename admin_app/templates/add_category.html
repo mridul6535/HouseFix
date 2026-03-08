@@ -1,0 +1,140 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+
+<div class="container-fluid py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
+
+            <div class="card shadow-sm border-0 rounded-4 p-4">
+
+                <!-- Header with Button -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="fw-bold mb-0">Add Service Category</h4>
+
+                    <a href="{% url 'show_category' %}" class="btn btn-outline-dark rounded-pill px-3">
+                        <i class="bi bi-list-ul me-1"></i> View Categories
+                    </a>
+                </div>
+
+                <form action="{% url 'save_category' %}" method="post" enctype="multipart/form-data"
+                      onsubmit="return validate_category()"
+                      style="max-width: 600px; margin:auto; background:white; padding:30px; border-radius:12px; box-shadow:0 8px 25px rgba(0,0,0,0.08); font-family:'Inter', sans-serif;">
+                    {% csrf_token %}
+
+                    <h3 style="text-align:center; color:#4B49AC; margin-bottom:25px; font-weight:600;">Add Service
+                        Category</h3>
+
+                    <!-- Category Name -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Category Name</label>
+                        <input type="text" id="category_name" name="category" class="form-control"
+                               placeholder="e.g. Luxury Landscaping"
+                               style="padding:12px; border-radius:8px; border:1.5px solid #e2e8f0; margin-top:5px;">
+                        <span id="msg_category"
+                              style="color:red; display:block; min-height:18px; font-size:0.85rem; margin-top:4px;"></span>
+                    </div>
+
+                    <!-- Category Image -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Category Image / Icon</label>
+                        <input type="file" id="category_image" name="category_image" class="form-control" style="padding:6px;">
+                        <span id="msg_image"
+                              style="color:red; display:block; min-height:18px; font-size:0.85rem; margin-top:4px;"></span>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Category Description</label>
+                        <textarea id="category_description" name="description" class="form-control" placeholder="Briefly describe..."
+                                  style="padding:12px; border-radius:8px; border:1.5px solid #e2e8f0; margin-top:5px;"></textarea>
+                        <span id="msg_description"
+                              style="color:red; display:block; min-height:18px; font-size:0.85rem; margin-top:4px;"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100"
+                            style="padding:14px; border-radius:8px; font-weight:600;">Save Category
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function previewImage(input) {
+        const preview = document.getElementById('imagePreview');
+        const text = document.getElementById('uploadText');
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+                preview.classList.remove('d-none');
+                text.style.display = 'none';
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function resetForm() {
+        document.getElementById('imagePreview').classList.add('d-none');
+        document.getElementById('uploadText').style.display = 'block';
+    }
+</script>
+<script>
+    function validate_category() {
+        // Clear previous messages
+        document.getElementById("msg_category").innerHTML = "";
+        document.getElementById("msg_image").innerHTML = "";
+        document.getElementById("msg_description").innerHTML = "";
+
+        // Get input values by id
+        let categoryName = document.getElementById("category_name").value.trim();
+        let categoryImage = document.getElementById("category_image").value.trim();
+        let description = document.getElementById("category_description").value.trim();
+
+        // Validation checks
+        if (categoryName === "") {
+            document.getElementById("msg_category").innerHTML = "Please enter category name";
+            return false;
+        }
+
+        if (categoryImage === "") {
+            document.getElementById("msg_image").innerHTML = "Please upload an image";
+            return false;
+        }
+
+        if (description === "") {
+            document.getElementById("msg_description").innerHTML = "Please enter description";
+            return false;
+        }
+
+        return true; // all validations passed
+    }
+</script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+{% if messages %}
+{% for i in messages %}
+{% if i.tags == "success" %}
+<script>
+    swal('{{ i }}', '', 'success')
+</script>
+{% elif i.tags == 'warning' %}
+<script>
+    swal('{{ i }}', '', 'warning')
+</script>
+{% elif i.tags == 'error' %}
+<script>
+    swal('{{ i }}', '', 'error')
+</script>
+{% elif i.tags == 'info' %}
+<script>
+    swal('{{ i }}', '', 'info')
+</script>
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% endblock %}

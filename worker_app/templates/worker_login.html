@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Worker Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: #f4f6f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-container {
+            background: #ffffff;
+            padding: 35px 30px;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .login-container h3 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #4B49AC;
+            font-weight: 600;
+            font-size: 1.4rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #2d3436;
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 8px;
+            border: 1.5px solid #e2e8f0;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+            transition: border 0.3s, box-shadow 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #4B49AC;
+            box-shadow: 0 0 0 4px rgba(75, 73, 172, 0.1);
+        }
+
+        .form-group span {
+            display: block;
+            min-height: 18px;
+            font-size: 0.85rem;
+            color: red;
+            margin-top: 4px;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: #4B49AC;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .login-btn:hover {
+            background: #3a388f;
+            transform: translateY(-1px);
+        }
+
+        .footer-text {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        @media (max-width: 420px) {
+            .login-container {
+                padding: 25px 20px;
+            }
+
+            .login-container h3 {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-container">
+    <form method="POST" action="{% url 'worker_login' %}" onsubmit="return validate_worker()">
+        {% csrf_token %}
+
+        <h3>Worker Login</h3>
+
+        <div class="form-group">
+            <label for="worker_name">Username</label>
+            <input type="text" id="worker_name" name="worker_name" placeholder="Enter username">
+            <span id="msg_username"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="worker_email">Email</label>
+            <input type="email" id="worker_email" name="worker_email" placeholder="Enter email">
+            <span id="msg_email"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter password">
+            <span id="msg_password"></span>
+        </div>
+
+        <button type="submit" class="login-btn">Login</button>
+    </form>
+
+    <div class="footer-text">
+        © 2026 Worker Portal
+    </div>
+</div>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+{% if messages %}
+{% for i in messages %}
+{% if i.tags == "success" %}
+<script>
+    swal('{{ i }}', '', 'success')
+</script>
+{% elif i.tags == 'warning' %}
+<script>
+    swal('{{ i }}', '', 'warning')
+</script>
+{% elif i.tags == 'error' %}
+<script>
+    swal('{{ i }}', '', 'error')
+</script>
+{% elif i.tags == 'info' %}
+<script>
+    swal('{{ i }}', '', 'info')
+</script>
+{% endif %}
+{% endfor %}
+{% endif %}
+
+<script>
+    function validate_worker() {
+        document.getElementById("msg_username").innerHTML = "";
+        document.getElementById("msg_email").innerHTML = "";
+        document.getElementById("msg_password").innerHTML = "";
+
+        let name = document.getElementById("worker_name").value.trim();
+        let mail = document.getElementById("worker_email").value.trim();
+        let pswd = document.getElementById("password").value.trim();
+
+        if (name === "") {
+            document.getElementById("msg_username").innerHTML = "Please Enter Username";
+            return false;
+        }
+        if (mail === "") {
+            document.getElementById("msg_email").innerHTML = "Please Enter Email";
+            return false;
+        }
+        if (pswd === "") {
+            document.getElementById("msg_password").innerHTML = "Please Enter Password";
+            return false;
+        }
+
+        return true;
+    }
+</script>
+</body>
+
+</html>

@@ -1,0 +1,143 @@
+{% extends "dashboard.html" %}
+
+{% block content %}
+
+<div class="content-header mb-4">
+    <div>
+        <h4 class="fw-bold mb-0">Support Requests</h4>
+        <p class="text-muted small">Manage customer inquiries and contact form submissions.</p>
+    </div>
+</div>
+
+<!-- Stats Row -->
+<div class="row g-4 mb-4">
+    <div class="col-lg-4 col-md-6">
+        <div class="stat-card h-100">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <small class="text-muted fw-bold text-uppercase">Total Requests</small>
+                    <h2 class="fw-800 mt-1">{{ contact_count }}</h2>
+                </div>
+                <div class="icon-box bg-info-soft text-info">
+                    <i class="bi bi-envelope-paper"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6">
+        <div class="stat-card h-100">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <small class="text-muted fw-bold text-uppercase">Unread</small>
+                    <h2 class="fw-800 mt-1">0</h2>
+                </div>
+                <div class="icon-box bg-warning-soft text-warning">
+                    <i class="bi bi-envelope-exclamation"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6">
+        <div class="stat-card h-100">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <small class="text-muted fw-bold text-uppercase">Resolved</small>
+                    <h2 class="fw-800 mt-1">{{ contact_count }}</h2>
+                </div>
+                <div class="icon-box bg-success-soft text-success">
+                    <i class="bi bi-check-circle"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Table Section -->
+<div class="data-section">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h5 class="fw-bold">All Support Requests</h5>
+
+        <div class="search-box">
+            <i class="bi bi-search"></i>
+            <input type="text" placeholder="Search inquiries...">
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table custom-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Subject</th>
+                    <th>Message</th>
+                    <th>Submitted On</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contact in contacts %}
+                <tr>
+                    <td class="fw-600">{{ contact.name }}</td>
+                    <td>{{ contact.email }}</td>
+                    <td>{{ contact.subject }}</td>
+                    <td>
+                        {{ contact.message|truncatechars:50 }}
+                    </td>
+                    <td>{{ contact.created_at }}</td>
+
+                    <td>
+                        {% if contact.status == "Unread" %}
+                            <span class="badge bg-warning text-dark">Unread</span>
+                        {% elif contact.status == "Resolved" %}
+                            <span class="badge bg-success">Resolved</span>
+                        {% else %}
+                            <span class="badge bg-secondary">{{ contact.status }}</span>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-light border rounded-pill dropdown-toggle"
+                                    data-bs-toggle="dropdown">
+                                Actions
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item"
+                                       href="{% url 'view_contact' contact.id %}">
+                                        <i class="bi bi-eye me-2"></i> View
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-success"
+                                       href="{% url 'mark_resolved' contact.id %}">
+                                        <i class="bi bi-check-circle me-2"></i> Mark as Resolved
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-danger"
+                                       href="{% url 'delete_contact' contact.id %}">
+                                        <i class="bi bi-trash me-2"></i> Delete
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center text-muted py-4">
+                        No support requests found.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

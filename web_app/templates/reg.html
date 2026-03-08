@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Join HOUSEFIX | Registration</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --hc-dark: #0f172a;
+            --hc-primary: #6366f1;
+            --hc-secondary: #f8fafc;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background: #f1f5f9;
+        }
+
+        .reg-container {
+            width: 100%;
+            max-width: 1100px;
+            margin: auto;
+            border-radius: 40px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.08);
+        }
+
+        .reg-sidebar {
+            background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80&w=800');
+            background-size: cover;
+            padding: 60px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-section {
+            padding: 60px;
+        }
+
+        .form-control {
+            padding: 12px 18px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            background: var(--hc-secondary);
+            margin-bottom: 15px;
+        }
+
+        .form-control:focus {
+            border-color: var(--hc-primary);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+            background: white;
+        }
+
+        .btn-reg {
+            background: var(--hc-dark);
+            color: white;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 700;
+            width: 100%;
+            border: none;
+            transition: 0.3s;
+        }
+
+        .btn-reg:hover {
+            background: var(--hc-primary);
+            transform: translateY(-2px);
+        }
+
+        .fw-800 {
+            font-weight: 800;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="reg-container">
+            <div class="row g-0">
+                <div class="col-lg-5 d-none d-lg-flex">
+                    <div class="reg-sidebar w-100">
+                        <h2 class="display-6 fw-800">Start Your Home Preservation Journey.</h2>
+                        <p class="opacity-75 mt-3">Join the circle of homeowners who prioritize property longevity and
+                            peace
+                            of mind.</p>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="form-section">
+                        <div class="mb-4">
+                            <h3 class="fw-800">Create Account</h3>
+                            <p class="text-muted small">Register with your email to begin.</p>
+                        </div>
+
+                        <form method="post" action="{% url 'reg_user' %}" name="register"
+                            onsubmit="return register_validate()"
+                            style="max-width: 450px; margin:auto; background:#fff; padding:30px; border-radius:12px; box-shadow:0 8px 25px rgba(0,0,0,0.08); font-family:'Inter', sans-serif;">
+                            {% csrf_token %}
+
+                            <h3 style="text-align:center; color:#4B49AC; margin-bottom:25px; font-weight:600;">Create
+                                Account</h3>
+
+                            <div class="mb-3">
+                                <input type="hidden" name="role" value="user">
+                                <label class="form-label small fw-bold">FULL NAME</label>
+                                <input type="text" name="username" id="username" class="form-control"
+                                    placeholder="Jane Doe"
+                                    style="
+            width:100%; padding:12px 15px; border-radius:8px; border:1.5px solid #e2e8f0; font-size:0.95rem; margin-top:5px;">
+                                <span id="msg_username" style="
+            color:red; display:block; min-height:18px; font-size:0.85rem; margin-top:4px;"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label small fw-bold">EMAIL ADDRESS</label>
+                                <input type="email" name="email" id="email" class="form-control"
+                                    placeholder="jane@example.com"
+                                    style="
+            width:100%; padding:12px 15px; border-radius:8px; border:1.5px solid #e2e8f0; font-size:0.95rem; margin-top:5px;">
+                                <span id="msg_email" style="
+            color:red; display:block; min-height:18px; font-size:0.85rem; margin-top:4px;"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label small fw-bold">PASSWORD</label>
+                                <input type="password" name="password" id="password" class="form-control"
+                                    placeholder="••••••••"
+                                    style="
+            width:100%; padding:12px 15px; border-radius:8px; border:1.5px solid #e2e8f0; font-size:0.95rem; margin-top:5px;">
+                                <span id="msg_password" style="
+            color:red; display:block; min-height:18px; font-size:0.85rem; margin-top:4px;"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label small fw-bold">CONFIRM PASSWORD</label>
+                                <input type="password" name="confirm_password" id="confirm_password"
+                                    class="form-control" placeholder="••••••••"
+                                    style="
+            width:100%; padding:12px 15px; border-radius:8px; border:1.5px solid #e2e8f0; font-size:0.95rem; margin-top:5px;">
+                                <span id="msg_confirm" style="
+            color:red; display:block; min-height:18px; font-size:0.85rem; margin-top:4px;"></span>
+                            </div>
+
+                            <button type="submit" class="btn btn-reg"
+                                style="
+        width:100%; padding:14px; background:#4B49AC; color:white; border:none; border-radius:8px; font-weight:600; font-size:1rem; cursor:pointer; transition:background 0.3s;">
+                                Create Account
+                            </button>
+
+                            <p class="text-center mt-4 small text-muted">
+                                Already have an account?
+                                <a href="{% url 'login' %}" class="text-primary fw-bold text-decoration-none">Sign
+                                    In</a>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function register_validate() {
+            // Clear previous messages
+            document.getElementById("msg_username").innerHTML = "";
+            document.getElementById("msg_email").innerHTML = "";
+            document.getElementById("msg_password").innerHTML = "";
+            document.getElementById("msg_confirm").innerHTML = "";
+
+            let username_up = document.register.username.value.trim();
+            let mail = document.register.email.value.trim();
+            let password_up = document.register.password.value.trim();
+            let c_password = document.register.confirm_password.value.trim();
+
+            if (username_up === "") {
+                document.getElementById("msg_username").innerHTML = "Please enter a username";
+                return false;
+            }
+            if (mail === "") {
+                document.getElementById("msg_email").innerHTML = "Please enter an email";
+                return false;
+            }
+            if (password_up === "") {
+                document.getElementById("msg_password").innerHTML = "Please enter a password";
+                return false;
+            }
+            if (password_up.length < 8) {
+                document.getElementById("msg_password").innerHTML = "Password must be at least 8 characters";
+                return false;
+            }
+            if (password_up !== c_password) {
+                document.getElementById("msg_confirm").innerHTML = "Password does not match";
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    {% if messages %}
+    {% for i in messages %}
+    {% if i.tags == "success" %}
+    <script>
+        swal('{{ i }}', '', 'success')
+    </script>
+    {% elif i.tags == 'warning' %}
+    <script>
+        swal('{{ i }}', '', 'warning')
+    </script>
+    {% elif i.tags == 'error' %}
+    <script>
+        swal('{{ i }}', '', 'error')
+    </script>
+    {% elif i.tags == 'info' %}
+    <script>
+        swal('{{ i }}', '', 'info')
+    </script>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+</body>
+
+</html>

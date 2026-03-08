@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #4e73df, #1cc88a);
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .login-card {
+            border: none;
+            border-radius: 15px;
+            background: #ffffff;
+        }
+
+        .login-card h3 {
+            font-weight: 600;
+        }
+
+        .form-control {
+            border-radius: 8px;
+        }
+
+        .btn-custom {
+            border-radius: 8px;
+            font-weight: 500;
+            transition: 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="card shadow-lg p-4 login-card" style="width: 380px;">
+            <h3 class="text-center mb-4">Welcome Back</h3>
+
+            <form method="POST" action="{% url 'admin_login'%}" onsubmit="return validate_admin()">
+                {% csrf_token %}
+
+                <!-- Email -->
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="admin_email" class="form-control" placeholder="Enter your email">
+                    <span id="msg_email" style="color:red; display:block; min-height:18px; font-size:0.85rem;"></span>
+                </div>
+
+                <!-- Username -->
+                <div class="mb-3">
+                    <label class="form-label">Username</label>
+                    <input type="text" name="admin_name" class="form-control" placeholder="Enter your username">
+                    <span id="msg_username"
+                        style="color:red; display:block; min-height:18px; font-size:0.85rem;"></span>
+                </div>
+
+                <!-- Password -->
+                <div class="mb-4">
+                    <label class="form-label">Password</label>
+                    <input type="password" name="password" class="form-control" placeholder="Enter your password">
+                    <span id="msg_password"
+                        style="color:red; display:block; min-height:18px; font-size:0.85rem;"></span>
+                </div>
+
+                <button type="submit" class="btn btn-dark w-100 btn-custom">Login</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        function validate_admin() {
+            // Clear previous messages
+            document.getElementById("msg_email").innerHTML = "";
+            document.getElementById("msg_username").innerHTML = "";
+            document.getElementById("msg_password").innerHTML = "";
+
+            // Get input values
+            let email = document.forms[0].admin_email.value.trim();
+            let username = document.forms[0].admin_name.value.trim();
+            let password = document.forms[0].password.value.trim();
+
+            // Validation checks
+            if (email === "") {
+                document.getElementById("msg_email").innerHTML = "Please enter email";
+                return false;
+            }
+            if (username === "") {
+                document.getElementById("msg_username").innerHTML = "Please enter username";
+                return false;
+            }
+            if (password === "") {
+                document.getElementById("msg_password").innerHTML = "Please enter password";
+                return false;
+            }
+
+            return true; // All validations passed
+        }
+    </script>
+</body>
+
+</html>

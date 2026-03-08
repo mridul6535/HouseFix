@@ -1,0 +1,86 @@
+{% extends 'index.html' %}
+{% block content %}
+<div class="container py-5">
+    <h2 class="text-center mb-4" style="color:#4B49AC;">Your Maintenance Requests</h2>
+
+    <table class="table table-hover shadow-sm rounded">
+        <thead class="table-primary">
+        <tr>
+            <th>#</th>
+            <th>Problem Title</th>
+            <th>Service Type</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Worker</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody id="request-table-body">
+        {% for i in req %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{i.problem_title}}</td>
+            <td>{{i.service_type}}</td>
+            {% if i.status == "completed" %}
+            <td class="status pending">{{i.status}}({{ i.completed_date}})</td>
+            {% else %}
+            <td class="status pending">{{i.status}}</td>
+            {% endif %}
+            <td>{{i.date}}</td>
+            {% if i.status == "accepted" %}
+            <td class="position-relative">
+                <a href="{% url 'worker_id' worker=i.worker %}">
+                    <button class="btn btn-primary btn-sm worker-btn">
+                        {{ i.worker }}
+                    </button>
+                </a>
+            </td>
+            <td class="position-relative">
+                cancellation not possible
+            </td>
+            {% else %}
+            <td class="position-relative">
+                not assigned
+            </td>
+            <td>
+                {% if i.status == "pending" or i.status == "reviewing" %}
+                <a href="{% url 'cancel_request' request_id=i.id %}">
+                    <button class="btn btn-danger btn-sm" onclick="cancelRequest(this)">Cancel</button>
+                </a>
+                {% else %}
+                <span class="text-muted small">
+                    Not Cancellable
+                </span>
+                {% endif %}
+            </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+{% if messages %}
+{% for i in messages %}
+{% if i.tags == "success" %}
+<script>
+    swal('{{ i }}','','success')
+</script>
+{% elif i.tags == 'warning' %}
+<script>
+    swal('{{ i }}','','warning')
+</script>
+{% elif i.tags == 'error' %}
+<script>
+    swal('{{ i }}','','error')
+</script>
+{% elif i.tags == 'info' %}
+<script>
+    swal('{{ i }}','','info')
+</script>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% block extra_content %}{% endblock %}
+
+{% endblock %}

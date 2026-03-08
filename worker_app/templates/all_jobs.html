@@ -1,0 +1,31 @@
+{% extends 'dashboard_w.html'%}
+{% block content %}
+<div class="table-responsive">
+    <table class="table align-middle">
+        <thead>
+        <tr>
+            <th>Client</th>
+            <th>Service</th>
+            <th>Location</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Completed Date</th>
+            <th>Payment</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for i in all_job %}
+        <tr>
+            <td>{{ i.full_name }}</td>
+            <td>{{ i.problem_title }}</td>
+            <td>{{ i.city }}</td>
+            <td>
+                <span class="badge badge-soft-success">{{i.status}}</span>
+            </td>
+            <td>{{ i.date }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends 'dashboard.html' %}
+{% block content %}
+<div class="container">
+    <h2 class="dashboard-title text-center">Workers List</h2>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>Category</th>
+                <th>City</th>
+                <th>Experience(years)</th>
+                <th>Working Time</th>
+                <!--                <th>Status</th>-->
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for i in worker %}
+            {% if i.role == "worker"%}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ i.user.username }}</td>
+                <td>{{ i.user.email }}</td>
+                <td>+91 {{ i.mobile }}</td>
+                <td>{{ i.category }}</td>
+                <td>{{ i.city }}</td>
+                <td>{{ i.experience }}</td>
+                <td>{{ i.working_time }} Daily</td>
+                <!--                <td>-->
+                <!--                        <span class="badge {% if i.role == 'pending' %}bg-warning text-dark{% elif i.role == 'worker' %}bg-success{% else %}bg-danger{% endif %}">-->
+                <!--                            {{ i.role|capfirst }}-->
+                <!--                        </span>-->
+                <!--                </td>-->
+                <td class="d-flex gap-1">
+                    <!--                    <form method="post" action="{% url 'change_role_approve' emp_id=i.id %}">-->
+                    <!--                        {% csrf_token %}-->
+                    <!--                        <input type="hidden" value="worker" name="role">-->
+                    <!--                        <button class="btn btn-success btn-sm" type="submit">Approve</button>-->
+                    <!--                    </form>-->
+
+                    <form method="post" action="{% url 'revoke_worker' emp_id=i.id %}">
+                        {% csrf_token %}
+                        <button class="btn btn-danger btn-sm" type="submit">Revoke</button>
+                    </form>
+                </td>
+            </tr>
+            {% endif %}
+            {% empty %}
+            <tr>
+                <td colspan="10" class="text-center text-muted">No workers found.</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+{% if messages %}
+{% for i in messages %}
+{% if i.tags == "success" %}
+<script>
+    swal('{{ i }}','','success')
+</script>
+{% elif i.tags == 'warning' %}
+<script>
+    swal('{{ i }}','','warning')
+</script>
+{% elif i.tags == 'error' %}
+<script>
+    swal('{{ i }}','','error')
+</script>
+{% elif i.tags == 'info' %}
+<script>
+    swal('{{ i }}','','info')
+</script>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endblock %}

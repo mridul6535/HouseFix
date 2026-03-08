@@ -1,0 +1,70 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+
+<style>
+.password-cell {
+    max-width: 180px;
+    word-break: break-all;
+    white-space: normal;
+    font-size: 0.75rem;
+}
+</style>
+
+<div class="data-section">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h5 class="fw-bold">User Accounts</h5>
+        <span class="badge bg-dark">{{ users|length }} Total</span>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table custom-table align-middle">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Role</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for user in users %}
+            <tr>
+                <td >{{ forloop.counter }}</td>
+                <td class="fw-bold">#{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td class="password-cell">{{ user.password }}</td>
+
+                <td>
+                    <span class="badge bg-danger">{{ user.role }}</span>
+                </td>
+
+                <td>
+                    <a href="{% url 'block_user' user.id %}"
+                       class="btn btn-sm btn-danger rounded-pill px-3">
+                        <i class="bi bi-slash-circle me-1"></i>
+                        Block
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center text-muted py-4">
+                    No users available.
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

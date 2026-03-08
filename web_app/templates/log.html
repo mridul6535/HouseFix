@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login | HOUSEFIX Concierge</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        #msg_username,
+    #msg_email,
+    #msg_password {
+    display: block;
+    min-height: 18px;   /* reserves space even when empty */
+    font-size: 0.85rem;
+}
+        :root {
+            --hc-dark: #0f172a;
+            --hc-primary: #6366f1;
+            --hc-secondary: #f1f5f9;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #ffffff;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: auto;
+            border-radius: 40px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.08);
+        }
+
+        .login-sidebar {
+            background: linear-gradient(rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.6)),
+                url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800');
+            background-size: cover;
+            background-position: center;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            color: white;
+            min-height: 600px;
+        }
+
+        .form-section {
+            padding: 60px;
+        }
+
+        .form-control {
+            padding: 14px 20px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            background-color: #f8fafc;
+            margin-bottom: 20px;
+            transition: 0.3s;
+        }
+
+        .form-control:focus {
+            background-color: white;
+            border-color: var(--hc-primary);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+
+        .btn-login {
+            background: var(--hc-dark);
+            color: white;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 700;
+            width: 100%;
+            border: none;
+            transition: 0.3s;
+        }
+
+        .btn-login:hover {
+            background: var(--hc-primary);
+            transform: translateY(-2px);
+        }
+
+        .role-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 50px;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--hc-primary);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .fw-800 {
+            font-weight: 800;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="login-container">
+            <div class="row g-0">
+                <div class="col-lg-6 d-none d-lg-flex">
+                    <div class="login-sidebar">
+                        <h2 class="display-5 fw-800">Welcome Home.</h2>
+                        <p class="opacity-75">Access your property dashboard, schedule premium maintenance, and connect
+                            with
+                            your dedicated concierge.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-section">
+                        <div class="mb-5">
+                            <a href="index.html" class="text-decoration-none text-dark fw-800 fs-4">HOUSEFIX</a>
+                            <h3 class="fw-800 mt-4">User Login</h3>
+                            <p class="text-muted">Enter your credentials to manage your house.</p>
+                        </div>
+
+                        <form method="POST" onsubmit="return login_validate()" action="{% url 'user_login' %}">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label class="form-label small fw-bold text-uppercase">Username</label>
+                                <input type="text" name="username" class="form-control" placeholder="name"
+                                    id="username">
+                                <span style="color: red;" id="msg_username"></span>
+                            </div>
+<!--                            <div class="mb-3">-->
+                                <!--                            <label class="form-label small fw-bold text-uppercase">Username</label>-->
+                                <!--                            <input type="hidden" name="role" class="form-control"-->
+                                <!--                                   placeholder="name" value="user.role">-->
+<!--                            </div>-->
+                            <div class="mb-3">
+                                <label class="form-label small fw-bold text-uppercase">Email Address</label>
+                                <input type="email" name="email" class="form-control"
+                                    placeholder="name@luxury-estate.com" id="email">
+                                <span style="color: red;" id="msg_email"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between">
+                                    <label class="form-label small fw-bold text-uppercase">Password</label>
+                                    <!-- <a href="#" class="small text-decoration-none text-primary fw-bold">Forgot?</a> -->
+                                </div>
+                                <input type="password" name="password" class="form-control" placeholder="password"
+                                    id="password">
+                                <span style="color: red;" id="msg_password"></span>
+                            </div>
+                            <button type="submit" class="btn btn-login mb-4">Sign In</button>
+
+                            <div class="text-center">
+                                <p class="small text-muted">
+                                    Don't have an account?
+                                    <a href="{% url 'register' %}"
+                                        class="text-primary fw-bold text-decoration-none">Register
+                                        here</a>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function login_validate() {
+            document.getElementById("msg_username").innerHTML = ""
+            document.getElementById("msg_email").innerHTML = ""
+            document.getElementById("msg_password").innerHTML = ""
+            mail = document.getElementById('email').value;
+            pass = document.getElementById('password').value;
+            name = document.getElementById('username').value;
+
+            if (name === "") {
+                document.getElementById("msg_username").innerHTML = "Please Enter Username"
+                return false
+            }
+            if (mail === "") {
+                document.getElementById("msg_email").innerHTML = "Please Enter Email"
+                return false
+            }
+            if (pass === "") {
+                document.getElementById("msg_password").innerHTML = "Please Enter Password"
+                return false
+            }
+
+        }
+    </script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    {% if messages %}
+    {% for i in messages %}
+    {% if i.tags == "success" %}
+    <script>
+        swal('{{ i }}', '', 'success')
+    </script>
+    {% elif i.tags == 'warning' %}
+    <script>
+        swal('{{ i }}', '', 'warning')
+    </script>
+    {% elif i.tags == 'error' %}
+    <script>
+        swal('{{ i }}', '', 'error')
+    </script>
+    {% elif i.tags == 'info' %}
+    <script>
+        swal('{{ i }}', '', 'info')
+    </script>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+</body>
+
+</html>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Concierge | HOUSEFIX Elite</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        /* --- Global Unified Palette --- */
+        :root {
+            --hc-dark: #0f172a;
+            --hc-primary: #6366f1;
+            --hc-secondary: #f1f5f9;
+            --hc-accent: #3b82f6;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #ffffff;
+            color: #1e293b;
+        }
+
+        .fw-800 { font-weight: 800; }
+
+        /* --- Navbar Styles (Unified) --- */
+        .navbar { padding: 1.5rem 0; background: white; }
+
+        .btn-dark {
+            border-radius: 20px;
+            padding-left: 1.2rem;
+            padding-right: 1.2rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .custom-dropdown {
+            border-radius: 12px;
+            padding: 0.5rem 0;
+            min-width: 200px;
+            background: #f8f9fa;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            border: none;
+        }
+
+        .custom-dropdown .dropdown-item {
+            color: #4B49AC;
+            font-weight: 500;
+            padding: 10px 20px;
+            transition: all 0.2s ease;
+        }
+
+        .custom-dropdown .dropdown-item:hover {
+            background-color: black;
+            color: white;
+            border-radius: 8px;
+        }
+
+        /* --- Contact UI Components --- */
+        .contact-card {
+            background: white;
+            border-radius: 35px;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.05);
+            padding: 50px;
+            border: 1px solid #f1f5f9;
+        }
+
+        .form-control {
+            padding: 14px 20px;
+            border-radius: 15px;
+            border: 1px solid #e2e8f0;
+            background-color: #fcfdfe;
+            transition: 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--hc-primary);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+
+        .contact-icon-box {
+            width: 55px;
+            height: 55px;
+            background: var(--hc-secondary);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--hc-primary);
+            font-size: 1.3rem;
+            transition: 0.3s;
+        }
+
+        .service-area-box {
+            background: var(--hc-dark);
+            border-radius: 40px;
+            padding: 50px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.15);
+        }
+
+        .area-badge {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 10px 22px;
+            border-radius: 100px;
+            display: inline-block;
+            margin: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .area-badge:hover {
+            background: var(--hc-primary);
+            border-color: var(--hc-primary);
+            transform: scale(1.05);
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #eef2f6;
+            padding: 24px 0;
+        }
+
+        .faq-question {
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            color: var(--hc-dark);
+            transition: 0.3s;
+        }
+
+        .faq-question:hover { color: var(--hc-primary); }
+
+        .glow-bg {
+            position: absolute;
+            top: -10%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: var(--hc-primary);
+            filter: blur(150px);
+            opacity: 0.15;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+
+
+<section class="py-5">
+    <div class="container py-5">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-5">
+                <h6 class="text-primary fw-bold text-uppercase" style="letter-spacing: 2px;">Connect</h6>
+                <h2 class="fw-800 display-4 mb-4">Let's Protect Your Home.</h2>
+                <p class="text-muted fs-5 mb-5">Our concierge team is available 24/7 for emergency repairs and elite
+                    maintenance inquiries.</p>
+
+                <div class="d-flex align-items-center mb-4">
+                    <div class="contact-icon-box me-3"><i class="bi bi-telephone"></i></div>
+                    <div>
+                        <p class="mb-0 fw-bold">Service Hotline</p>
+                        <small class="text-muted">+1 (800) 123-4567</small>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="contact-icon-box me-3"><i class="bi bi-envelope"></i></div>
+                    <div>
+                        <p class="mb-0 fw-bold">Email Concierge</p>
+                        <small class="text-muted">concierge@housefix.com</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-7">
+                <div class="contact-card">
+                    <form method="post" action="{% url 'save_contact' %}">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label small fw-800 text-muted">FULL NAME</label>
+                                <input type="text" class="form-control" placeholder="John Doe" name="name">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label small fw-800 text-muted">EMAIL ADDRESS</label>
+                                <input type="email" class="form-control" placeholder="john@example.com" name="email">
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label small fw-800 text-muted">HOW CAN WE HELP?</label>
+                            <textarea class="form-control" rows="4" placeholder="Describe your inquiry..."
+                                      name="message"></textarea>
+                        </div>
+                        <button class="btn btn-dark w-100 fw-bold py-3 shadow-sm" type="submit">Send Request</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container pb-5">
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <div class="service-area-box h-100">
+                    <div class="glow-bg"></div>
+                    <h6 class="text-primary fw-bold mb-3 text-uppercase" style="letter-spacing: 2px;">Global Reach</h6>
+                    <h2 class="fw-800 mb-4 display-6">Priority Service <br>Regions</h2>
+                    <p class="opacity-75 mb-5">We currently provide white-glove maintenance in the following
+                        metropolitan areas with 60-minute emergency response times.</p>
+
+                    <div class="d-flex flex-wrap mb-5">
+                        <span class="area-badge">Greater London</span>
+                        <span class="area-badge">Manhattan & Hamptons</span>
+                        <span class="area-badge">Dubai (Downtown)</span>
+                        <span class="area-badge">Los Angeles</span>
+                        <span class="area-badge">Singapore</span>
+                        <span class="area-badge">Paris (1st-8th)</span>
+                    </div>
+
+                    <div class="d-flex align-items-center pt-4 border-top border-secondary">
+                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3"
+                             style="width: 45px; height: 45px;">
+                            <i class="bi bi-geo-fill"></i>
+                        </div>
+                        <div>
+                            <p class="mb-0 fw-bold">Expanding Soon</p>
+                            <small class="opacity-50">New regions launching Summer 2026</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="ps-lg-5 p-4">
+                    <h2 class="fw-800 mb-4 display-6">Common Inquiries</h2>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            How fast is emergency response?
+                            <i class="bi bi-plus-lg text-primary"></i>
+                        </div>
+                        <div class="small text-muted mt-2">Executive Plan members receive a guaranteed technician
+                            on-site within 60 minutes, 24/7/365.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Do you work with smart home tech?
+                            <i class="bi bi-plus-lg text-primary"></i>
+                        </div>
+                        <div class="small text-muted mt-2">Yes, our teams are certified in Lutron, Control4, Savant, and
+                            high-end security system integration.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            Are your tradespeople vetted?
+                            <i class="bi bi-plus-lg text-primary"></i>
+                        </div>
+                        <div class="small text-muted mt-2">All staff undergo rigorous background checks and quarterly
+                            training to ensure "White-Glove" quality.
+                        </div>
+                    </div>
+
+                    <div class="mt-5">
+                        <p class="fw-bold mb-3">Need immediate assistance?</p>
+                        <a href="#" class="btn btn-outline-dark rounded-pill px-5 py-2">Live Chat with Concierge</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+{% endblock %}
