@@ -45,7 +45,7 @@
         <div class="card shadow-lg p-4 login-card" style="width: 380px;">
             <h3 class="text-center mb-4">Welcome Back</h3>
 
-            <form method="POST" action="{% url 'admin_login'%}" onsubmit="return validate_admin()">
+            <form method="POST" action="{% url 'admin_login' %}" onsubmit="return validate_admin()">
                 {% csrf_token %}
 
                 <!-- Email -->
