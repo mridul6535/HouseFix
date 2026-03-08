@@ -21,6 +21,7 @@ def admin_login_page(request):
 
 
 def admin_login(request):
+    print("ADMIN LOGIN VIEW HIT")
     if request.method == "POST":
         name = request.POST.get("admin_name")
         mail = request.POST.get("admin_email")
@@ -36,6 +37,7 @@ def admin_login(request):
         else:
             messages.error(request, "Invalid username or password.")
             return redirect('admin_login_page')
+        return redirect('admin_login_page')
 
 
 def admin_logout(request):
