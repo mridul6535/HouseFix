@@ -37,7 +37,7 @@ def admin_login(request):
         else:
             messages.error(request, "Invalid username or password.")
             return redirect('admin_login_page')
-        return redirect('admin_login_page')
+    return redirect('admin_login_page')
 
 
 def admin_logout(request):
