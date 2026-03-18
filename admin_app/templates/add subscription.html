@@ -1,0 +1,94 @@
+{% extends "dashboard.html" %}
+{% block content %}
+
+<div class="data-section">
+    <h5 class="fw-bold mb-4">Add Subscription Plan</h5>
+
+    <form method="POST" enctype="multipart/form-data" action="{% url 'save_subscription' %}">
+        {% csrf_token %}
+
+        <div class="row g-4">
+
+            <!-- Username -->
+            <div class="col-md-6">
+                <label class="form-label">Plan Name</label>
+                <input type="text" name="plan_name" class="form-control rounded-pill" required>
+            </div>
+
+            <!-- Price -->
+            <div class="col-md-6">
+                <label class="form-label">Price (₹)</label>
+                <input type="number" name="price" class="form-control rounded-pill">
+            </div>
+
+            <!-- Duration -->
+            <div class="col-md-6">
+                <label class="form-label">Duration (year)</label>
+                <input type="number" name="duration_months" class="form-control rounded-pill">
+            </div>
+
+            <!-- Response Time -->
+            <div class="col-md-6">
+                <label class="form-label">Response Time (Hours)</label>
+                <input type="number" name="response_time" class="form-control rounded-pill">
+            </div>
+
+            <!-- Inspections Per Year -->
+            <div class="col-md-6">
+                <label class="form-label">Inspections Per Year</label>
+                <input type="number" name="inspections_per_year" class="form-control rounded-pill">
+            </div>
+
+            <!-- Spare Parts Discount -->
+            <div class="col-md-6">
+                <label class="form-label">Spare Parts Discount (%)</label>
+                <input type="number" name="spare_parts_discount" class="form-control rounded-pill">
+            </div>
+
+            <!-- Free Minor Repairs -->
+            <div class="col-md-6">
+                <label class="form-label">Free Minor Repairs</label>
+                <input type="text" name="free_minor_repairs" class="form-control rounded-pill" placeholder="Yes / No">
+            </div>
+
+            <!-- Emergency Support -->
+            <div class="col-md-6">
+                <label class="form-label">Emergency Support</label>
+                <select name="emergency_support" class="form-select rounded-pill">
+                    <option value="">Select</option>
+                    <option value="True">Yes</option>
+                    <option value="False">No</option>
+                </select>
+            </div>
+
+            <!-- Seasonal Inspection -->
+            <div class="col-md-6">
+                <label class="form-label">Seasonal Inspection</label>
+                <input type="text" name="inspection" class="form-control rounded-pill" placeholder="frequency">
+            </div>
+
+            <!-- Description -->
+            <div class="col-12">
+                <label class="form-label">Description</label>
+                <textarea name="description" rows="4" class="form-control rounded-4"></textarea>
+            </div>
+
+            <!-- Image -->
+            <div class="col-md-6">
+                <label class="form-label">Plan Image</label>
+                <input type="file" name="image" class="form-control rounded-pill">
+            </div>
+
+        </div>
+
+        <!-- Submit Button -->
+        <div class="mt-4 text-end">
+            <button type="submit" class="btn btn-primary rounded-pill px-4">
+                Save Subscription
+            </button>
+        </div>
+
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends 'request_status.html' %}
+
+{% block content %}
+<div class="container py-5">
+
+    <!-- Worker Info Card -->
+    <div class="col-lg-6 mb-4">
+        <div class="card application-card shadow-sm h-100">
+
+            <div class="card-header-custom d-flex justify-content-between align-items-center p-3 bg-light border-bottom">
+                <div class="d-flex align-items-center">
+                    <!-- Profile Icon / Photo -->
+                    <img src="{{ work.id_image.url|default:'default_profile.jpg' }}"
+                         alt="Profile Photo" class="rounded-circle me-3" width="50" height="50">
+
+                    <div>
+                        <h5 class="mb-0 text-primary">{{ work.user.username }}</h5>
+                        <small class="text-muted">{{ work.category }} specialist</small>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center ">
+
+                    <!-- WhatsApp Icon Link -->
+                    <a href="https://wa.me/{{ work.mobile }}" target="_blank"
+                       class="text-success me-2 whatsapp-icon pr-5"
+                       title="Message on WhatsApp">
+                        <i class="bi bi-whatsapp fs-4 mr-5"></i>
+                    </a>
+
+                    <!-- Email Icon Link -->
+                    <a href="mailto:{{ work.user.email }}" class="text-primary email-icon" title="Send Email">
+                        <i class="bi bi-envelope fs-4"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="card-body p-4">
+                <div class="row mb-3">
+                    <div class="col-sm-6 mb-2">
+                        <div class="small text-uppercase text-muted fw-bold">Email</div>
+                        <div class="text-break">{{ work.user.email }}</div>
+                    </div>
+                    <div class="col-sm-6 mb-2">
+                        <div class="small text-uppercase text-muted fw-bold">Mobile</div>
+                        <div>+91 {{ work.mobile }}</div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-6 mb-2">
+                        <div class="small text-uppercase text-muted fw-bold">City</div>
+                        <div>{{ work.city }}</div>
+                    </div>
+                    <div class="col-sm-6 mb-2">
+                        <div class="small text-uppercase text-muted fw-bold">Experience(years)</div>
+                        <div>{{ work.experience }}</div>
+                    </div>
+                </div>
+                <hr class="my-4">
+
+                <div class="row text-center mb-4 g-3">
+                    <div class="col-6">
+                        <div class="small text-uppercase text-muted fw-bold mb-2">Personal ID</div>
+                        <img src="{{ work.id_image.url }}" class="img-fluid id-image mx-auto d-block">
+                    </div>
+                    <div class="col-6">
+                        <div class="small text-uppercase text-muted fw-bold mb-2">Professional ID</div>
+                        <img src="{{ work.professional_id_image.url }}" class="img-fluid id-image mx-auto d-block">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    .email-icon i {
+    transition: transform 0.2s;
+}
+.email-icon i:hover {
+    transform: scale(1.2);
+    color: #0d6efd; /* Bootstrap primary blue */
+}
+    .whatsapp-icon i {
+        color: #25D366; /* WhatsApp green */
+        transition: transform 0.2s;
+    }
+    .whatsapp-icon i:hover {
+        transform: scale(1.2);
+        color: #128C7E;
+    }
+</style>
+
+{% endblock %}

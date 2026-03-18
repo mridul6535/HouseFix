@@ -1,0 +1,112 @@
+{% extends 'dashboard.html' %}
+{% block content %}
+
+{% if req %}
+{% for i in req %}
+{% if i.status == "completed"%}
+<div class="d-flex justify-content-center">
+    <div class="details-card">
+
+        <!-- HEADER -->
+        <div class="card-header-custom d-flex justify-content-between align-items-start">
+
+            <div>
+                <h5 class="mb-1 fw-bold">Request #{{i.id}}</h5>
+
+                <div class="mt-2">
+                    <small class="opacity-75 d-block">Client Name</small>
+                    <span class="fw-semibold">{{i.full_name}}</span>
+                </div>
+
+                <small class="opacity-75 d-block mt-2">
+                    Submitted: {{i.date}}
+                </small>
+            </div>
+
+            <div class="text-end">
+                <span class="status-pill bg-danger">{{i.status}}</span>
+                <p style="font-size:20px;padding-top:10px" class="d-block mt-1 text-white text-center">
+                    Assigned to {{request.session.worker_name}}
+                </p>
+            </div>
+        </div>
+
+
+        <!-- BODY -->
+        <div class="card-body-custom">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <!-- Service Type -->
+                    <div class="info-group">
+                        <div class="icon-circle">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <div class="info-text">
+                            <label>Service Type</label>
+                            <p>{{i.service_type}} Maintenance</p>
+                        </div>
+                    </div>
+
+                    <!-- City -->
+                    <div class="info-group">
+                        <div class="icon-circle">
+                            <i class="fas fa-city"></i>
+                        </div>
+                        <div class="info-text">
+                            <label>City</label>
+                            <p>{{ i.city }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Pincode -->
+                    <div class="info-group">
+                        <div class="icon-circle">
+                            <i class="fas fa-map-pin"></i>
+                        </div>
+                        <div class="info-text">
+                            <label>Pincode</label>
+                            <p>{{ i.pin_code }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Service Location -->
+                    <div class="info-group">
+                        <div class="icon-circle">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="info-text">
+                            <label>Service Location</label>
+                            <p>{{i.address}}</p>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="info-group">
+                        <div class="icon-circle">
+                            <i class="fas fa-align-left"></i>
+                        </div>
+                        <div class="info-text">
+                            <label>Detailed Description</label>
+                            <p class="fw-normal text-muted">{{i.description}}</p>
+                        </div>
+                    </div>
+
+                    <!-- Image -->
+                    <div class="mt-4">
+                        <label class="fw-bold">Evidence / Photo</label>
+                        <div class="image-preview-box">
+                            <img src="{{i.problem_image.url}}" alt="Problem Image">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endblock %}

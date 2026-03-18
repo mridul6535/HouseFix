@@ -1,0 +1,191 @@
+{% extends "dashboard.html" %}
+
+{% block content %}
+
+<header class="content-header">
+    <div>
+        <h4 class="fw-bold mb-0">Maintenance Request Details</h4>
+    </div>
+    <div>
+        <button class="btn btn-white border rounded-pill px-4 me-2 bg-white fw-600">
+            <i class="bi bi-printer me-2"></i>Export
+        </button>
+    </div>
+</header>
+{% if req %}
+{% for i in req %}
+{% if i.status == 'accepted' %}
+<div class="d-flex justify-content-center">
+    <div class="details-card">
+
+        <!-- HEADER -->
+        <div class="card-header-custom d-flex justify-content-between align-items-start">
+
+            <!-- Left Section -->
+            <div>
+                <h5 class="mb-1 fw-bold">Request #{{i.id}}</h5>
+
+                <!-- Client Name -->
+                <div class="mt-2">
+                    <small class="opacity-75 d-block">Client Name</small>
+                    <span class="fw-semibold">{{i.full_name}}</span>
+                </div>
+
+                <!-- Submitted Date -->
+                <small class="opacity-75 d-block mt-2">
+                    Submitted: {{i.date}}
+                </small>
+            </div>
+
+            <!-- Status Badge -->
+            <span class="status-pill bg-danger">{{i.status}}</span>
+
+        </div>
+
+
+        <!-- BODY -->
+        <div class="card-body-custom">
+            <div class="row">
+
+                <!-- LEFT SIDE (All Details) -->
+                <div class="col-md-12">
+
+                    <div class="info-group">
+                        <div class="icon-circle"><i class="fas fa-tools"></i></div>
+                        <div class="info-text">
+                            <label>Service Type</label>
+                            <p>{{i.service_type}} Maintenance</p>
+                        </div>
+                    </div>
+
+                    <div class="info-group">
+                        <div class="icon-circle"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="info-text">
+                            <label>City</label>
+                            <p>{{ i.city }}</p>
+                        </div>
+                    </div>
+
+                    <div class="info-group">
+                        <div class="icon-circle"><i class="fas fa-mail-bulk"></i></div>
+                        <div class="info-text">
+                            <label>Pincode</label>
+                            <p>{{ i.pin_code }}</p>
+                        </div>
+                    </div>
+
+                    <div class="info-group">
+                        <div class="icon-circle"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="info-text">
+                            <label>Service Location</label>
+                            <p>{{i.address}}</p>
+                        </div>
+                    </div>
+
+                    <div class="info-group">
+                        <div class="icon-circle"><i class="fas fa-align-left"></i></div>
+                        <div class="info-text">
+                            <label>Detailed Description</label>
+                            <p class="fw-normal text-muted">{{i.description}}</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <label class="fw-bold">Evidence / Photo</label>
+                        <div class="image-preview-box">
+                            <img src="{{i.problem_image.url}}" alt="Problem Image">
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- FOOTER -->
+        <div class="card-footer-custom d-flex justify-content-between align-items-center">
+
+            <!--            <button class="btn btn-light rounded-pill px-4" onclick="history.back()">-->
+            <!--                <i class="bi bi-arrow-left me-2"></i>Back to List-->
+            <!--            </button>-->
+
+            <div class="d-flex justify-content-end gap-2">
+
+                <button type="button"
+                        class="btn btn-danger rounded-pill px-4"
+                        data-bs-toggle="modal"
+                        data-bs-target="#rejectModal">
+                    Reject
+                </button>
+                <!-- Reject Modal -->
+                <div class="modal fade" id="rejectModal" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h5 class="modal-title">Send Rejection Message</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+
+                            <form method="post" action="{% url 'reject_request' req_id=i.id %}">
+                                {% csrf_token %}
+
+                                <div class="modal-body">
+                                    <input type="hidden" value="reject" name="status">
+                                    <div class="mb-3">
+                                        <label class="form-label">Subject</label>
+                                        <input type="text" name="subject" class="form-control" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">mail</label>
+                                        <input type="email" name="to_email" class="form-control"
+                                               value="{{request.session.email}}">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">From</label>
+                                        <input type="email" name="from_email" class="form-control" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Message</label>
+                                        <textarea name="message" class="form-control" rows="4" required></textarea>
+                                    </div>
+
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel
+                                    </button>
+                                    <button type="submit" class="btn btn-danger">Send & Reject</button>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+                <a href="{% url 'assigning_table' req_id=i.id %}">
+                    <button class="btn btn-primary rounded-pill px-4" type="submit">
+                        Assign Worker
+                    </button>
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+{% endif %}
+{% endfor %}
+{% else %}
+<div class="col-12 text-center py-5">
+    <div class="card border-0 bg-transparent">
+        <i class="bi bi-inbox text-muted" style="font-size: 3rem;"></i>
+        <h5 class="text-muted mt-3">No pending requests left.</h5>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

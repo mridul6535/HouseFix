@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About Us | HOUSEFIX Elite</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        /* --- Unified Style Palette --- */
+        .custom-dropdown {
+            border-radius: 12px;
+            padding: 0.5rem 0;
+            min-width: 200px;
+            background: #f8f9fa;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            border: none;
+        }
+
+        .custom-dropdown .dropdown-item {
+            color: #4B49AC;
+            font-weight: 500;
+            padding: 10px 20px;
+            transition: all 0.2s ease;
+        }
+
+        .custom-dropdown .dropdown-item:hover {
+            background-color: black;
+            color: white;
+            border-radius: 8px;
+        }
+
+        .dropdown-toggle::after {
+            border-top-color: #6c757d;
+        }
+
+        :root {
+            --hc-dark: #0f172a;
+            --hc-primary: #6366f1;
+            --hc-secondary: #f1f5f9;
+            --hc-accent: #3b82f6;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #ffffff;
+            color: #1e293b;
+        }
+
+        .fw-800 { font-weight: 800; }
+
+        /* --- Navbar --- */
+        .navbar {
+            padding: 1.5rem 0;
+            background: white;
+        }
+
+        .btn-dark {
+            border-radius: 20px;
+            padding-left: 1.2rem;
+            padding-right: 1.2rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* --- About Hero --- */
+        .about-hero {
+            padding: 120px 0 80px 0;
+            background: var(--hc-dark);
+            color: white;
+            border-radius: 0 0 50px 50px;
+        }
+
+        /* --- Pillar Cards (Bento Style) --- */
+        .pillar-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 32px;
+            padding: 40px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            height: 100%;
+        }
+
+        .pillar-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.05);
+            border-color: var(--hc-primary);
+        }
+
+        .pillar-icon-box {
+            width: 70px;
+            height: 70px;
+            background: var(--hc-secondary);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            color: var(--hc-primary);
+            font-size: 1.8rem;
+        }
+
+        .text-gradient {
+            background: linear-gradient(45deg, #ffffff, var(--hc-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body>
+<section class="about-hero text-center">
+    <div class="container">
+        <h6 class="text-primary fw-bold text-uppercase" style="letter-spacing: 2px;">Our Mission</h6>
+        <h1 class="display-3 fw-800">Redefining Home <span class="text-gradient">Stewardship.</span></h1>
+        <p class="lead opacity-75 mx-auto mt-4" style="max-width: 700px;">
+            Founded in 2015, HouseFix was born from a simple observation: luxury homes deserve more than just
+            repairs—they require dedicated preservation.
+        </p>
+    </div>
+</section>
+
+<section class="py-5 my-5">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-6">
+                <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&q=80&w=800"
+                     class="img-fluid rounded-5 shadow-lg" alt="Our Workspace">
+            </div>
+            <div class="col-lg-6">
+                <h2 class="fw-800 mb-4 display-6">The HouseFix Standard</h2>
+                <p class="text-muted fs-5">We don't just wait for things to break. Our philosophy is rooted in <strong>preventive
+                    care</strong>. By combining craftsmanship with modern smart-home monitoring, we protect your
+                    investment before issues arise.</p>
+                <div class="mt-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="icon-square-sm bg-light p-2 rounded-circle me-3">
+                            <i class="bi bi-check-lg text-primary fw-bold"></i>
+                        </div>
+                        <span class="fw-bold">Certified & Vetted Technicians</span>
+                    </div>
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="icon-square-sm bg-light p-2 rounded-circle me-3">
+                            <i class="bi bi-check-lg text-primary fw-bold"></i>
+                        </div>
+                        <span class="fw-bold">White-Glove Service Guarantee</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light rounded-5 mx-3 mb-5">
+    <div class="container py-5">
+        <div class="row mb-5 justify-content-center text-center">
+            <div class="col-lg-7">
+                <h2 class="fw-800 display-5 mb-3">The Three Pillars of Care</h2>
+                <p class="text-muted">More than maintenance. We provide a lifestyle of uninterrupted peace and
+                    architectural integrity.</p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="pillar-card">
+                    <div class="pillar-icon-box">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <h4 class="fw-800 mb-3">Absolute Security</h4>
+                    <p class="text-muted mb-0">Every technician is background-checked, insured, and trained to respect
+                        the privacy of your private estate.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="pillar-card">
+                    <div class="pillar-icon-box">
+                        <i class="bi bi-cpu"></i>
+                    </div>
+                    <h4 class="fw-800 mb-3">Intelligence First</h4>
+                    <p class="text-muted mb-0">We use proprietary IoT sensors to monitor your home's vitals, predicting
+                        failures before they become catastrophes.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="pillar-card">
+                    <div class="pillar-icon-box">
+                        <i class="bi bi-stars"></i>
+                    </div>
+                    <h4 class="fw-800 mb-3">Craftsmanship</h4>
+                    <p class="text-muted mb-0">We don't just "patch" problems. We restore your home using materials and
+                        techniques that match its original design.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+{% endblock %}

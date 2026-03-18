@@ -1,0 +1,81 @@
+{% extends 'dashboard.html' %}
+{% block content %}
+
+<div class="container-fluid py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-md-9">
+
+            <div class="card shadow-sm border-0 rounded-4 p-4">
+
+                <!-- Header -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="fw-bold mb-0">Edit Service Category</h4>
+
+                    <a href="{% url 'show_category' %}"
+                       class="btn btn-outline-dark rounded-pill px-3">
+                        <i class="bi bi-list-ul me-1"></i> View Categories
+                    </a>
+                </div>
+
+                <form method="post"
+                      action="{% url 'update_category' cat_id=cat.id %}"
+                      enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <!-- Category Name -->
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">Category Name</label>
+                        <input type="text"
+                               class="form-control rounded-3"
+                               name="category"
+                               value="{{ cat.category_name }}"
+                               required>
+                    </div>
+
+                    <!-- Current Image + Upload -->
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">Category Image</label>
+
+                        {% if cat.category_photo %}
+                        <div class="mb-3 text-center">
+                            <img src="{{ cat.category_photo.url }}"
+                                 class="rounded-3 border"
+                                 style="width:100px; height:100px; object-fit:cover;">
+                        </div>
+                        {% endif %}
+
+                        <input type="file"
+                               class="form-control rounded-3"
+                               name="category_image">
+                        <small class="text-muted">Leave blank to keep existing image.</small>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">Category Description</label>
+                        <textarea class="form-control rounded-3"
+                                  rows="4"
+                                  name="description">{{ cat.category_description }}</textarea>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="d-flex gap-3">
+                        <button type="submit"
+                                class="btn btn-primary rounded-pill px-4 flex-fill">
+                            Update Category
+                        </button>
+
+                        <button type="reset"
+                                class="btn btn-outline-secondary rounded-pill px-4">
+                            Cancel
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

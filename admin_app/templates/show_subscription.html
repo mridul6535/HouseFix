@@ -1,0 +1,61 @@
+{% extends "dashboard.html" %}
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="fw-bold">Subscription Plan</h4>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover text-center align-middle">
+
+            <thead class="table-dark">
+            <tr>
+                <th>Image</th>
+                <th>Plan Name</th>
+                <th>Price</th>
+                <th>Duration</th>
+                <th>Response Time</th>
+                <th>Inspections/Year</th>
+                <th>Discount</th>
+                <th>Minor Repairs</th>
+                <th>Emergency</th>
+                <th>Seasonal</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for i in sub %}
+            <tr>
+                <td>
+                    <img src="{{i.image.url}}"
+                         width="60"
+                         height="60"
+                         style="object-fit:cover;">
+                </td>
+                <td>{{i.plan_name}}</td>
+                <td>₹{{i.price}}</td>
+                <td>{{i.duration}} Year</td>
+                <td>{{i.response_time}} Hour</td>
+                <td>{{i.inspections_per_year}}</td>
+                <td>{{i.discount}}%</td>
+                <td>{{i.free_minor_repairs}}</td>
+                <td>{{i.emergency_support}}</td>
+                <td>{{i.description}}</td>
+                <td>
+                    <a href="{% url 'edit_subscription' plan_id=i.id%}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="{% url 'delete_subscription' plan_id=i.id%}" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

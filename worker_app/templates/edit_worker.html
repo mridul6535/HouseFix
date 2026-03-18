@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Register | HOUSEFIX Concierge</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        :root {
+            --hc-dark: #0f172a;
+            --hc-primary: #6366f1;
+            --hc-secondary: #f8fafc;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f1f5f9;
+            padding: 50px 0;
+        }
+
+        .registration-card {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            border-radius: 30px;
+            border: none;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .card-header-custom {
+            background: var(--hc-dark);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .card-body {
+            padding: 50px;
+        }
+
+        .form-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #64748b;
+            margin-bottom: 8px;
+        }
+
+        .form-control,
+        .form-select {
+            padding: 12px 18px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            background-color: var(--hc-secondary);
+            margin-bottom: 20px;
+            transition: 0.3s;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            background-color: white;
+            border-color: var(--hc-primary);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+
+        .btn-submit {
+            background: var(--hc-dark);
+            color: white;
+            padding: 14px 40px;
+            border-radius: 12px;
+            font-weight: 700;
+            border: none;
+            transition: 0.3s;
+        }
+
+        .btn-submit:hover {
+            background: var(--hc-primary);
+            transform: translateY(-2px);
+        }
+
+        .btn-cancel {
+            background: transparent;
+            color: #64748b;
+            font-weight: 600;
+            border: none;
+        }
+
+        /* Custom File Upload Styling */
+        .file-upload-wrapper {
+            position: relative;
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .file-upload-input {
+            display: none;
+        }
+
+        .fw-800 {
+            font-weight: 800;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="registration-card">
+        <div class="card-header-custom">
+            <h2 class="fw-800 mb-2">Professional Registration</h2>
+            <p class="opacity-75 mb-0">Join our network of elite service providers.</p>
+        </div>
+        <div class="card-body">
+            <form class="forms-sample" method="POST" enctype="multipart/form-data"
+                  action="{% url 'update_worker' worker_id=worker.id %}" onsubmit="return worker_req_validate()">
+                {% csrf_token %}
+                <input type="hidden" value="pending" name="role">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="form-label">Username</label>
+                        <input type="text" class="form-control" placeholder="Username" name="username"
+                               value="{{ request.session.worker_name }}">
+                        <span id="msg_username"
+                              style="color:red; display:block; min-height:18px; font-size:0.85rem;"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Email address</label>
+                        <input type="email" class="form-control" placeholder="Email" name="email"
+                               value="{{ request.session.email }}" readonly>
+                        <span id="msg_email"
+                              style="color:red; display:block; min-height:18px; font-size:0.85rem;"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="form-label">Mobile Number</label>
+                        <input type="tel" class="form-control" value="{{worker.mobile}}" name="mobile" readonly>
+                        <span id="msg_mobile"
+                              style="color:red; display:block; min-height:18px; font-size:0.85rem;"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">City</label>
+                        <input type="text" class="form-control" value="{{worker.city}}" name="city">
+                        <span id="msg_city"
+                              style="color:red; display:block; min-height:18px; font-size:0.85rem;"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="form-label">Select Category</label>
+                        <select class="form-select" name="category">
+                            <option> {{worker.category}}</option>
+                            {% for i in cat %}
+                            <option>{{i.category_name}}</option>
+                            {% endfor %}
+                        </select>
+                        <span id="msg_category"
+                              style="color:red; display:block; min-height:18px; font-size:0.85rem;"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Years of Experience</label>
+                        <input type="number" class="form-control" placeholder="Years"
+                               value="{{worker.experience}}" name="experience">
+                        <span id="msg_experience"
+                              style="color:red; display:block; min-height:18px; font-size:0.85rem;"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="form-label">Min. Working Time</label>
+                        <input type="text" class="form-control" placeholder="e.g. 8 hours"
+                               value="{{worker.working_time}}" name="working_time">
+                        <span id="msg_working_time"
+                              style="color:red; display:block; min-height:18px; font-size:0.85rem;"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Upload Profile Photo</label>
+                        <div class="file-upload-wrapper">
+                            <input type="file" name="worker_image" class="file-upload-input" id="workerImg"
+                                   accept="image/*">
+                            <img src="{{worker.worker_image.url}}" height="50px" width="50px">
+                            <input type="text" class="form-control mb-0" placeholder="No file chosen" readonly
+                                   id="workerFileName">
+                            <button class="btn btn-primary px-4 rounded-3" type="button"
+                                    onclick="document.getElementById('workerImg').click()">
+                                Browse
+                            </button>
+                        </div>
+                        <span id="msg_worker_image"
+                              style="color:red; display:block; min-height:18px; font-size:0.85rem;"></span>
+                    </div>
+                </div>
+
+                <hr class="my-4 opacity-25">
+
+
+                <div class="mt-4 d-flex align-items-center gap-3">
+                    <button type="submit" class="btn btn-submit">Update Profile</button>
+                    <button type="reset" class="btn btn-cancel">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Script to show file name in the custom input box
+    document.getElementById('idImg').onchange = function () {
+        document.getElementById('idFileName').value = this.files[0].name;
+    };
+    document.getElementById('proIdImg').onchange = function () {
+        document.getElementById('proIdFileName').value = this.files[0].name;
+    };
+    document.getElementById('workerImg').onchange = function () {
+        document.getElementById('workerFileName').value = this.files[0].name;
+    };
+</script>
+<script>
+    function worker_req_validate() {
+        // Clear previous messages
+        document.getElementById("msg_mobile").innerHTML = ""
+        document.getElementById("msg_category").innerHTML = ""
+        document.getElementById("msg_city").innerHTML = ""
+        document.getElementById("msg_working_time").innerHTML = ""
+        document.getElementById("msg_experience").innerHTML = ""
+        document.getElementById("msg_id").innerHTML = ""
+        document.getElementById("msg_pro_id").innerHTML = ""
+
+        const mobile = document.querySelector('input[name="mobile"]').value;
+        const category = document.querySelector('select[name="category"]').value;
+        const city = document.querySelector('input[name="city"]').value;
+        const working_time = document.querySelector('input[name="working_time"]').value;
+        const experience = document.querySelector('input[name="experience"]').value;
+        const id_image = document.getElementById('idImg').files.length;
+        const pro_id_image = document.getElementById('proIdImg').files.length;
+
+        if (mobile === "") {
+            document.getElementById("msg_mobile").innerHTML = "Please Enter Mobile Number";
+            return false;
+        }
+        if (city === "") {
+            document.getElementById("msg_city").innerHTML = "Please Enter City";
+            return false;
+        }
+        if (category === "" || category === "Choose Category") {
+            document.getElementById("msg_category").innerHTML = "Please Select Category";
+            return false;
+        }
+        if (experience === "") {
+            document.getElementById("msg_experience").innerHTML = "Please Enter Years of Experience";
+            return false;
+        }
+        if (working_time === "") {
+            document.getElementById("msg_working_time").innerHTML = "Please Enter Minimum Working Time";
+            return false;
+        }
+        if (id_image === 0) {
+            document.getElementById("msg_id").innerHTML = "Please Upload Personal ID";
+            return false;
+        }
+        if (pro_id_image === 0) {
+            document.getElementById("msg_pro_id").innerHTML = "Please Upload Professional ID";
+            return false;
+        }
+        return true;
+    }
+</script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+{% if messages %}
+{% for i in messages %}
+{% if i.tags == "success" %}
+<script>
+    swal('{{ i }}', '', 'success')
+</script>
+{% elif i.tags == 'warning' %}
+<script>
+    swal('{{ i }}', '', 'warning')
+</script>
+{% elif i.tags == 'error' %}
+<script>
+    swal('{{ i }}', '', 'error')
+</script>
+{% elif i.tags == 'info' %}
+<script>
+    swal('{{ i }}', '', 'info')
+</script>
+{% endif %}
+{% endfor %}
+{% endif %}
+
+</body>
+
+</html>

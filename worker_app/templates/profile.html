@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Worker Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: "Segoe UI", sans-serif;
+        }
+        .worker-profile {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 10px;
+        }
+        .worker-profile h5 {
+            color: #0d6efd;
+        }
+        .worker-profile p {
+            margin-bottom: 0;
+        }
+        .worker-profile h6 {
+            margin-top: 2px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="worker-profile card shadow-sm p-4">
+    <div class="d-flex align-items-center mb-4">
+        <img src="{{profile.worker_image.url}}" class="rounded-circle me-3"
+             style="width: 60px; height: 60px; object-fit: cover;" alt="Profile Picture">
+        <div>
+            <h5 class="fw-bold mb-0">Worker Profile</h5>
+            <small class="text-muted">Profile Summary</small>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-6">
+            <p class="text-muted">Worker Name</p>
+            <h6 class="fw-semibold">{{profile.username}}</h6>
+        </div>
+        <div class="col-md-6">
+            <p class="text-muted">Email</p>
+            <h6 class="fw-semibold">{{profile.email}}</h6>
+        </div>
+        <div class="col-md-6">
+            <p class="text-muted">Mobile Number</p>
+            <h6 class="fw-semibold">{{profile.mobile}}</h6>
+        </div>
+        <div class="col-md-6">
+            <p class="text-muted">City</p>
+            <h6 class="fw-semibold">{{profile.city}}</h6>
+        </div>
+        <div class="col-md-6">
+            <p class="text-muted">Category</p>
+            <h6 class="fw-semibold">{{profile.category}}</h6>
+        </div>
+        <div class="col-md-6">
+            <p class="text-muted">Years of Experience(years)</p>
+            <h6 class="fw-semibold">{{profile.experience}}</h6>
+        </div>
+        <div class="col-md-6">
+            <p class="text-muted">Min. Working Time</p>
+            <h6 class="fw-semibold">{{profile.working_time}}</h6>
+        </div>
+        <div class="col-md-6">
+            <p class="text-muted">Status</p>
+            <span class="badge bg-success">Active</span>
+        </div>
+    </div>
+
+    <hr class="my-4 opacity-25">
+
+    <div class="row g-4">
+        <div class="col-md-6">
+            <p class="text-muted">Personal ID</p>
+            <button type="button"
+                    class="btn btn-sm btn-outline-primary rounded-pill"
+                    data-bs-toggle="modal"
+                    data-bs-target="#idModal">
+                <i class="bi bi-file-earmark-text me-1"></i> View ID
+            </button>
+        </div>
+        <div class="col-md-6">
+            <p class="text-muted">Professional ID</p>
+            <button type="button"
+                    class="btn btn-sm btn-outline-primary rounded-pill"
+                    data-bs-toggle="modal"
+                    data-bs-target="#proIdModal">
+                <i class="bi bi-file-earmark-text me-1"></i> Professional ID
+            </button>
+        </div>
+    </div>
+</div>
+<div class="text-center mt-3">
+    <a href="{% url 'edit_worker' worker_id=profile.id %}"
+       class="btn btn-primary px-4 rounded-pill shadow-sm">
+        <i class="bi bi-pencil-square me-2"></i> Edit Profile
+    </a>
+</div>
+<div class="modal fade" id="idModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Personal ID</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body text-center">
+                <img src="{{ profile.id_image.url }}"
+                     class="img-fluid rounded"
+                     alt="Personal ID">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--professional id modal -->
+<div class="modal fade" id="proIdModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Professional ID</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body text-center">
+                <img src="{{ profile.professional_id_image.url }}"
+                     class="img-fluid rounded"
+                     alt="Professional ID">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

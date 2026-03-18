@@ -1,0 +1,292 @@
+{% extends "dashboard.html" %}
+
+{% block content %}
+
+<header class="content-header">
+    <div>
+        <h4 class="fw-bold mb-0">Maintenance Request Details</h4>
+    </div>
+    <div>
+        <button class="btn btn-white border rounded-pill px-4 me-2 bg-white fw-600">
+            <i class="bi bi-printer me-2"></i>Export
+        </button>
+    </div>
+</header>
+
+{% if req %}
+{% for i in req %}
+
+{% if i.status == "rejected" %}
+<div class="d-flex justify-content-center">
+    <div class="details-card">
+
+        <!-- HEADER -->
+        <div class="card-header-custom d-flex justify-content-between align-items-start">
+            <div>
+                <h5 class="mb-1 fw-bold">Request #{{i.id}}</h5>
+
+                <div class="mt-2">
+                    <small class="opacity-75 d-block">Client Name</small>
+                    <span class="fw-semibold">{{i.full_name}}</span>
+                </div>
+
+                <small class="opacity-75 d-block mt-2">
+                    Submitted: {{i.date}}
+                </small>
+            </div>
+
+            <div class="text-end">
+                <span class="status-pill bg-danger">{{i.status}}</span>
+                <p style="font-size:20px;padding-top:10px" class="d-block mt-1 text-white text-center">
+                    Rejected by {{i.worker}}
+                </p>
+            </div>
+        </div>
+
+        <!-- BODY -->
+        <div class="card-body-custom">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="info-group">
+                        <div class="icon-circle">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <div class="info-text">
+                            <label>Service Type</label>
+                            <p>{{i.service_type}} Maintenance</p>
+                        </div>
+                    </div>
+
+                    <div class="info-group">
+                        <div class="icon-circle">
+                            <i class="fas fa-city"></i>
+                        </div>
+                        <div class="info-text">
+                            <label>City</label>
+                            <p>{{ i.city }}</p>
+                        </div>
+                    </div>
+
+                    <div class="info-group">
+                        <div class="icon-circle">
+                            <i class="fas fa-map-pin"></i>
+                        </div>
+                        <div class="info-text">
+                            <label>Pincode</label>
+                            <p>{{ i.pin_code }}</p>
+                        </div>
+                    </div>
+
+                    <div class="info-group">
+                        <div class="icon-circle">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="info-text">
+                            <label>Service Location</label>
+                            <p>{{i.address}}</p>
+                        </div>
+                    </div>
+
+                    <div class="info-group">
+                        <div class="icon-circle">
+                            <i class="fas fa-align-left"></i>
+                        </div>
+                        <div class="info-text">
+                            <label>Detailed Description</label>
+                            <p class="fw-normal text-muted">{{i.description}}</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <label class="fw-bold">Evidence / Photo</label>
+                        <div class="image-preview-box">
+                            <img src="{{i.problem_image.url}}" alt="Problem Image">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="card-footer-custom d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-end gap-2">
+
+                <!-- FIXED Reject Button -->
+                <button type="button"
+                        class="btn btn-danger rounded-pill px-4"
+                        data-bs-toggle="modal"
+                        data-bs-target="#rejectModal{{i.id}}">
+                    Reject
+                </button>
+
+                <a href="{% url 'assigning_table' req_id=i.id %}">
+                    <button class="btn btn-primary rounded-pill px-4" type="submit">
+                        Assign Worker
+                    </button>
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endif %}
+
+{% if i.status == 'pending' %}
+<div class="d-flex justify-content-center">
+    <div class="details-card">
+
+        <!-- HEADER -->
+        <div class="card-header-custom d-flex justify-content-between align-items-start">
+            <div>
+                <h5 class="mb-1 fw-bold">Request #{{i.id}}</h5>
+
+                <div class="mt-2">
+                    <small class="opacity-75 d-block">Client Name</small>
+                    <span class="fw-semibold">{{i.full_name}}</span>
+                </div>
+
+                <small class="opacity-75 d-block mt-2">
+                    Submitted: {{i.date}}
+                </small>
+            </div>
+
+            <!-- FIXED Color -->
+            <span class="status-pill bg-warning">{{i.status}}</span>
+        </div>
+
+        <!-- BODY -->
+        <div class="card-body-custom">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="info-group">
+                        <div class="icon-circle">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <div class="info-text">
+                            <label>Service Type</label>
+                            <p>{{i.service_type}} Maintenance</p>
+                        </div>
+                    </div>
+
+                    <div class="info-group">
+                        <div class="icon-circle">
+                            <i class="fas fa-city"></i>
+                        </div>
+                        <div class="info-text">
+                            <label>City</label>
+                            <p>{{ i.city }}</p>
+                        </div>
+                    </div>
+
+                    <div class="info-group">
+                        <div class="icon-circle">
+                            <i class="fas fa-map-pin"></i>
+                        </div>
+                        <div class="info-text">
+                            <label>Pincode</label>
+                            <p>{{ i.pin_code }}</p>
+                        </div>
+                    </div>
+
+                    <div class="info-group">
+                        <div class="icon-circle">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="info-text">
+                            <label>Service Location</label>
+                            <p>{{i.address}}</p>
+                        </div>
+                    </div>
+
+                    <div class="info-group">
+                        <div class="icon-circle">
+                            <i class="fas fa-align-left"></i>
+                        </div>
+                        <div class="info-text">
+                            <label>Detailed Description</label>
+                            <p class="fw-normal text-muted">{{i.description}}</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <label class="fw-bold">Evidence / Photo</label>
+                        <div class="image-preview-box">
+                            <img src="{{i.problem_image.url}}" alt="Problem Image">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="card-footer-custom d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-end gap-2">
+
+                <!-- FIXED Reject Button -->
+                <button type="button"
+                        class="btn btn-danger rounded-pill px-4"
+                        data-bs-toggle="modal"
+                        data-bs-target="#rejectModal{{i.id}}">
+                    Reject
+                </button>
+
+                <a href="{% url 'assigning_table' req_id=i.id %}">
+                    <button class="btn btn-primary rounded-pill px-4" type="submit">
+                        Assign Worker
+                    </button>
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endif %}
+
+<!-- Modal -->
+<div class="modal fade" id="rejectModal{{i.id}}" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Rejection</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                Are you sure you want to reject Request #{{i.id}}?
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+
+                <form action="{% url 'reject_request' req_id=i.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">
+                        Yes, Reject
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+{% else %}
+<div class="col-12 text-center py-5">
+    <div class="card border-0 bg-transparent">
+        <i class="bi bi-inbox text-muted" style="font-size: 3rem;"></i>
+        <h5 class="text-muted mt-3">No pending requests left.</h5>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
