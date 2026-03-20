@@ -23,10 +23,11 @@ def admin_login_page(request):
 
 def admin_login(request):
       if request.method == "POST":
-        u_name = request.POST.get("username")
+        name = request.POST.get("admin_name")
+        mail = request.POST.get("admin_email")
         pswd = request.POST.get("password")
-        if User.objects.filter(username__contains=u_name).exists():
-            data = authenticate(username=u_name, password=pswd)
+        if User.objects.filter(username__contains=name).exists():
+            data = authenticate(username=name, password=pswd)
             if data is not None:
                 login(request, data)
                 name = request.POST.get("admin_name")
