@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from admin_app.models import *
 from web_app.models import *
+from django.contrib.auth.models import User
 from django.core.files.storage import FileSystemStorage
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib import messages
@@ -13,7 +14,17 @@ import random
 from django.conf import settings
 from django.shortcuts import get_object_or_404
 
+from django.http import HttpResponse
 
+def create_superuser_view(request):
+    if not User.objects.filter(username='admin').exists():
+        User.objects.create_superuser(
+            username='admin',
+            email='admin@gmail.com',
+            password='admin123'
+        )
+        return HttpResponse("Superuser created")
+    return HttpResponse("Superuser already exists")
 # Create your views here.
 
 def admin_login_page(request):
@@ -21,23 +32,22 @@ def admin_login_page(request):
 
 
 def admin_login(request):
-    print("ADMIN LOGIN VIEW HIT")
-    if request.method == "POST":
-        name = request.POST.get("admin_name")
-        mail = request.POST.get("admin_email")
+      if request.method == "POST":
+        u_name = request.POST.get("username")
         pswd = request.POST.get("password")
-
-        user = authenticate(request, username=name, password=pswd)
-
-        if user is not None:
-            login(request, user)
-            request.session['admin_name'] = name
-            request.session['admin_email'] = mail
-            return redirect('dashboard')
+        if User.objects.filter(username__contains=u_name).exists():
+            data = authenticate(username=u_name, password=pswd)
+            if data is not None:
+                login(request, data)
+                name = request.POST.get("admin_name")
+                mail = request.POST.get("admin_email")
+                return redirect(dashboard)
+            else:
+                messages.error(request, "password does not match")
+                return redirect(admin_login_page)
         else:
-            messages.error(request, "Invalid username or password.")
-            return redirect('admin_login_page')
-    return redirect('admin_login_page')
+            messages.error(request, "User does not exist")
+            return redirect(admin_login_page)
 
 
 def admin_logout(request):
