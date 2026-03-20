@@ -14,17 +14,7 @@ import random
 from django.conf import settings
 from django.shortcuts import get_object_or_404
 
-from django.http import HttpResponse
 
-def create_superuser_view(request):
-    if not User.objects.filter(username='admin').exists():
-        User.objects.create_superuser(
-            username='mridul',
-            email='mridulkp7@gmail.com',
-            password='12345678'
-        )
-        return HttpResponse("Superuser created")
-    return HttpResponse("Superuser already exists")
 # Create your views here.
 
 def admin_login_page(request):
