@@ -24,8 +24,8 @@ import worker_app.urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(admin_app.urls)),
-    path('HouseFix/', include(web_app.urls)),
+    path('HouseFix_admin/', include(admin_app.urls)),
+    path('', include(web_app.urls)),
     path('worker/', include(worker_app.urls)),
 ]
 urlpatterns += staticfiles_urlpatterns()
