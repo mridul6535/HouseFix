@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns, static
-from . import settings
+from django.conf import settings
 import admin_app.urls
 import web_app.urls
 import worker_app.urls
