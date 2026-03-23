@@ -23,10 +23,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = 'django-insecure-abc123-your-key'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG') == 'True'
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'web_app', 'admin_app', 'worker_app',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -121,8 +123,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -140,3 +142,11 @@ load_dotenv()
 
 STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 HF_API_KEY = os.getenv("HF_API_KEY")
+import cloudinary
+
+cloudinary.config(
+    cloud_name='dajrfn7cs',
+    api_key='381729342243214',
+    api_secret='739YiYlZkKCeBzDGgAB9_dLvVMY'
+)
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

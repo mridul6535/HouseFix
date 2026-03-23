@@ -22,23 +22,24 @@ def admin_login_page(request):
 
 
 def admin_login(request):
-      if request.method == "POST":
-        name = request.POST.get("admin_name")
+    if request.method == "POST":
+        username = request.POST.get("admin_name")
+        password = request.POST.get("password")
         mail = request.POST.get("admin_email")
-        pswd = request.POST.get("password")
-        if User.objects.filter(username__contains=name).exists():
-            data = authenticate(username=name, password=pswd)
-            if data is not None:
-                login(request, data)
-                name = request.POST.get("admin_name")
-                mail = request.POST.get("admin_email")
-                return redirect(dashboard)
-            else:
-                messages.error(request, "password does not match")
-                return redirect(admin_login_page)
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            request.session['admin_name']=username
+            request.session['admin_email']=mail
+            return redirect(dashboard)
         else:
-            messages.error(request, "User does not exist")
-            return redirect(admin_login_page)
+            print(" user is none")
+            messages.error(request, "Invalid username or password")
+            return redirect('admin_login_page')
+
+    return redirect("admin_login_page")
 
 
 def admin_logout(request):
@@ -48,7 +49,8 @@ def admin_logout(request):
 
 
 def dashboard(request):
-    if not request.session.get('admin_email'):
+    if not request.session.get('admin_name'):
+        messages.error(request,'login failed')
         return redirect(admin_login_page)
     pending_req = MaintenanceRequest.objects.filter(status="pending")
     req_count = pending_req.count()
