@@ -3,14 +3,6 @@ from web_app.models import Users
 
 
 # Create your models here.class User(AbstractUser):
-# class User(AbstractUser):
-#     email = models.EmailField(unique=True)
-#     name=models.CharField(max_length=100,null=True)
-#     default_role = "user"
-#     role = models.CharField(max_length=50, default=default_role)
-#     username = None
-#     USERNAME_FIELD = 'email'
-#     REQUIRED_FIELDS = []
 
 
 class CategoryDB(models.Model):
