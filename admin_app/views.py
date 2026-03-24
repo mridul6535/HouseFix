@@ -13,6 +13,19 @@ from worker_app.views import worker_login_page
 import random
 from django.conf import settings
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User
+from django.http import HttpResponse
+
+def create_admin(request):
+    if not User.objects.filter(username="admin").exists():
+        User.objects.create_superuser(
+            username="admin",
+            email="admin@example.com",
+            password="admin123"
+        )
+        return HttpResponse("Superuser created")
+    else:
+        return HttpResponse("Superuser already exists")
 
 
 # Create your views here.
