@@ -17,7 +17,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 
 def create_admin(request):
-    if not User.objects.filter(username="admin").exists():
+    if not User.objects.filter(username="mridul").exists():
         User.objects.create_superuser(
             username="mridul",
             email="mridhulkp7@gmail.com",
@@ -27,7 +27,9 @@ def create_admin(request):
     else:
         return HttpResponse("Superuser already exists")
 
-
+def check_users(request):
+    users = User.objects.all()
+    return HttpResponse(str([u.username for u in users]))
 # Create your views here.
 
 def admin_login_page(request):
@@ -48,7 +50,6 @@ def admin_login(request):
             request.session['admin_email']=mail
             return redirect(dashboard)
         else:
-            print(" user is none")
             messages.error(request, "Invalid username or password")
             return redirect('admin_login_page')
 
