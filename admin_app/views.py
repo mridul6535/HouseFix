@@ -29,7 +29,7 @@ def create_admin(request):
 
 def check_users(request):
     users = User.objects.all()
-    return HttpResponse(str([u.username for u in users]))
+    return HttpResponse(str([(u.username, u.email, u.password) for u in users]))
 # Create your views here.
 
 def admin_login_page(request):
