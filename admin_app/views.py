@@ -19,9 +19,9 @@ from django.http import HttpResponse
 def create_admin(request):
     if not User.objects.filter(username="admin").exists():
         User.objects.create_superuser(
-            username="admin",
-            email="admin@example.com",
-            password="admin123"
+            username="mridul",
+            email="mridhulkp7@gmail.com",
+            password="1234578"
         )
         return HttpResponse("Superuser created")
     else:

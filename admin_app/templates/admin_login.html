@@ -77,17 +77,14 @@
     </div>
     <script>
         function validate_admin() {
-            // Clear previous messages
             document.getElementById("msg_email").innerHTML = "";
             document.getElementById("msg_username").innerHTML = "";
             document.getElementById("msg_password").innerHTML = "";
 
-            // Get input values
             let email = document.forms[0].admin_email.value.trim();
             let username = document.forms[0].admin_name.value.trim();
             let password = document.forms[0].password.value.trim();
 
-            // Validation checks
             if (email === "") {
                 document.getElementById("msg_email").innerHTML = "Please enter email";
                 return false;
@@ -101,9 +98,31 @@
                 return false;
             }
 
-            return true; // All validations passed
+            return true;
         }
     </script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    {% if messages %}
+    {% for i in messages %}
+    {% if i.tags == "success" %}
+    <script>
+        swal('{{ i }}', '', 'success')
+    </script>
+    {% elif i.tags == 'warning' %}
+    <script>
+        swal('{{ i }}', '', 'warning')
+    </script>
+    {% elif i.tags == 'error' %}
+    <script>
+        swal('{{ i }}', '', 'error')
+    </script>
+    {% elif i.tags == 'info' %}
+    <script>
+        swal('{{ i }}', '', 'info')
+    </script>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
 </body>
 
 </html>
